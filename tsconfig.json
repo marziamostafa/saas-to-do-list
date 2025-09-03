@@ -1,22 +1,24 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
+  "include": ["src"], // which files to compile
+  "exclude": ["node_modules"], // which files to skip
   "compilerOptions": {
     // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
+    "module": "CommonJS",
     "target": "esnext",
-    "types": [],
+    "types": ["node"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
     // and npm install -D @types/node
     // Other Outputs
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
+    // "sourceMap": true,
+    // "declaration": true,
+    // "declarationMap": true,
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
@@ -34,6 +36,6 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
+    "skipLibCheck": true
   }
 }
