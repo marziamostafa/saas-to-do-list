@@ -3,7 +3,7 @@ import config from "./app/config"
 
 const connections: Record<string, Connection> = {}
 
-export const getTenantConnection = async (tenantId: string, url: string) => {
+export const getTenantConnection = async (tenantId: string) => {
 
     if (connections[tenantId]) {
         return connections[tenantId]
