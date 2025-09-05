@@ -1,17 +1,23 @@
-import mongoose, { Connection } from "mongoose"
-import config from "./app/config"
+import mongoose, { Connection } from "mongoose";
+import config from "./app/config";
 
-const connections: Record<string, Connection> = {}
+const connections: Record<string, Connection> = {};
 
 export const getTenantConnection = async (tenantId: string) => {
+  if (connections[tenantId]) {
+    return connections[tenantId];
+  }
+  // dynamic
+  // const connection = await mongoose.createConnection(`${config.url}/${tenantId}?${config.ext}`, {
+  //     dbName: tenantId,
+  // })
 
-    if (connections[tenantId]) {
-        return connections[tenantId]
+  const connection = await mongoose.createConnection(
+    `${config.url}/tenant1?${config.ext}`,
+    {
+      dbName: "tenant1",
     }
-
-    const connection = await mongoose.createConnection(`${config.url}/${tenantId}?${config.ext}`, {
-        dbName: tenantId,
-    })
-    connections[tenantId] = connection;
-    return connection;
-}
+  );
+  connections[tenantId] = connection;
+  return connection;
+};
