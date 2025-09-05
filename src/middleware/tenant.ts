@@ -8,7 +8,11 @@ export const tenantMiddleware = async (
 ) => {
   console.log("Tenant middleware triggered");
   const host = req.headers.host || "";
+  // const host = req.hostname;
   const tenantId = host.split(".")[0];
+  // const tenantId = req.path.split("/")[1];
+  // const tenantId = host.split(".")[0].split(":")[0];
+
   if (!tenantId) {
     return res.status(400).json({ error: "Tenant not found in subdomain" });
   }
@@ -23,6 +27,8 @@ export const tenantMiddleware = async (
   }
 
   console.log("host", host); // need to run curl http://localhost:5000/
+  console.log("req.hostname:", req.hostname);
+  console.log("req.headers.host:", req.headers.host);
   console.log("tenant", tenantId); // need to run curl http://localhost:5000/
   // next();
 };

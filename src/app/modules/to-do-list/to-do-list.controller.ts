@@ -29,6 +29,37 @@ const getToDoListFromDbController = async (
   }
 };
 
+const createToDoListIntoDbController = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const data = req.body;
+    const connection = req.dbConnection;
+    if (!connection) {
+      res.status(500).json({
+        success: false,
+        message: "No database connection",
+      });
+      return;
+    }
+    const result = await ToDoListService.createToDoListIntoDb(connection, data);
+
+    res.status(200).json({
+      success: true,
+      message: "To Do List created successfully",
+      data: result,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: err,
+    });
+  }
+};
+
 export const ToDoListController = {
   getToDoListFromDbController,
+  createToDoListIntoDbController,
 };
