@@ -1,3 +1,28 @@
+## set up the backend as usual
+
+previously we used to connect with the database in out server.ts
+
+this time we won't connect anything like before ; we will create a tenantDB.ts to create and connect the database
+
+![alt text](image-1.png)
+
+## create database and connect
+
+![alt text](image-2.png)
+
+```
+const connections: Record<string, Connection> = {};
+
+```
+
+here , **connections** a dictionary object (cache) to store tenant-specific database connections.
+
+**Record** is a utility type in ts that allows you to define an object type with specific keys and values
+
+keys will be string type
+
+**Connection** is object from mongoose that will hold the values for those keys ,those values will be specific database connection for the different tenant ids.
+
 ## To check multi-tenancy locally:
 
 **Need to change the Host file**
