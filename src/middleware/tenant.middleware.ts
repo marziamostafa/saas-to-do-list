@@ -6,20 +6,44 @@ export const checkTenantStatus = async (
   res: Response,
   next: NextFunction
 ) => {
+  // const subdomain = req.headers.host?.split(".")[0];
+
+  // try {
+  //   const tenant = await TenantModel.findById({ name: subdomain });
+
+  //   if (!tenant || !tenant.isActive) {
+  //     return res.status(403).json({
+  //       success: false,
+  //       message: "Tenant is blocked or not found"
+  //     })
+  //   }
+  //   req.tenant = tenant.toObject();  // ✅ Attach tenant (as plain object if needed)
+  //   next()
+  // } catch (err) {
+  //   next()
+  // }
+
   const subdomain = req.headers.host?.split(".")[0];
 
   try {
-    const tenant = await TenantModel.findById({ name: subdomain });
+    const tenant = await TenantModel.findOne({ name: subdomain });
 
-    if (!tenant || !tenant.isActive) {
+    if (!tenant) {
       return res.status(403).json({
         success: false,
-        message: "Tenant is blocked or not found"
-      })
+        message: "Tenant not found",
+      });
     }
-    req.tenant = tenant.toObject();  // ✅ Attach tenant (as plain object if needed)
-    next()
+
+    if (!tenant.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: "Tenant is blocked",
+      });
+    }
+    req.tenant = tenant.toObject();
+    next();
   } catch (err) {
-    next()
+    next(err); // Better to pass error forward
   }
 };

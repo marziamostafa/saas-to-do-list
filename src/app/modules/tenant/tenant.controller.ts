@@ -17,7 +17,7 @@ const createTenantController = async (
       });
     }
 
-    const dbUrl = `${config.url}/${data.name}/${config.ext}`;
+    const dbUrl = `${config.url}/${data.name}?${config.ext}`;
 
     const result = await TenantService.createTenant({ ...data, dbUrl });
 
