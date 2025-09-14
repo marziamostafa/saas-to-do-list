@@ -7,5 +7,19 @@ export const checkTenantStatus = async (
   next: NextFunction
 ) => {
   const subdomain = req.headers.host?.split(".")[0];
-  const tenant = await TenantModel.findById({ name: subdomain });
+
+  try {
+    const tenant = await TenantModel.findById({ name: subdomain });
+
+    if (!tenant || !tenant.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: "Tenant is blocked or not found"
+      })
+    }
+    req.tenant = tenant.toObject();  // ✅ Attach tenant (as plain object if needed)
+    next()
+  } catch (err) {
+    next()
+  }
 };
