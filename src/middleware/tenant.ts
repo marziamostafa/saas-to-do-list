@@ -9,7 +9,11 @@ export const tenantMiddleware = async (
   console.log("Tenant middleware triggered");
   const host = req.headers.host || "";
 
-  if (host === "tenant.returnhex.com") {
+  if (!host.includes(".")) {
+    return res.status(400).json({ error: "Invalid host" });
+  }
+
+  if (host === "tenant.returnhex.com" || host.endsWith(".localhost")) {
     // (req as any).isSuperadmin = true;
     return next(); // skip DB connection
   }

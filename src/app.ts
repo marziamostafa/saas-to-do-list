@@ -37,8 +37,8 @@ app.use("/api/v1/superadmin", TenantRoutes);
 // app.use("/api/v1", checkTenantStatus, UserRoutes);
 
 // application routes
-// app.use("/api/v1", ToDoListRoute);
-app.use("/api/v1", tenantMiddleware, checkTenantStatus, ToDoListRoute);
+app.use("/api/v1", ToDoListRoute);
+// app.use("/api/v1", tenantMiddleware, checkTenantStatus, ToDoListRoute);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
