@@ -8,6 +8,12 @@ export const tenantMiddleware = async (
 ) => {
   console.log("Tenant middleware triggered");
   const host = req.headers.host || "";
+
+  if (host === "tenant.returnhex.com") {
+    // (req as any).isSuperadmin = true;
+    return next(); // skip DB connection
+  }
+
   // const host = req.hostname;
   const tenantId = host.split(".")[0];
   // const tenantId = req.path.split("/")[1];
